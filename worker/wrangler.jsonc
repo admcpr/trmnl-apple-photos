@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trmnl-apple-photos",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+  "observability": {
+    "enabled": true
+  }
+}

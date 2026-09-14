@@ -1,0 +1,28 @@
+{% comment %}
+  Shared markup, prepended to every view. Each view renders `photo_view` with
+  its own layout name. `render` gets an isolated scope, so every value the
+  template needs is passed in explicitly.
+{% endcomment %}
+{% template photo_view %}
+{%- assign fit = settings.fit | default: "cover" -%}
+{%- if fit != "contain" -%}{%- assign fit = "cover" -%}{%- endif -%}
+{%- assign caption = settings.show_caption | downcase -%}
+<div class="view view--{{ view }}" style="padding: 0; overflow: hidden; position: relative;">
+{%- if ok -%}
+  <img class="image image-dither image--{{ fit }}" src="{{ photo.url }}" alt="" style="display: block; width: 100%; height: 100%;">
+  {%- if caption == "true" or caption == "yes" or caption == "1" -%}
+  <div class="title_bar" style="position: absolute; left: 0; right: 0; bottom: 0;">
+    <span class="title">{{ album.title | default: "Apple Photos" }}</span>
+    {%- if photo.taken_at and photo.taken_at != "" -%}
+    <span class="instance">{{ photo.taken_at | date: "%-d %b %Y" }}</span>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+{%- else -%}
+  <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 40px; text-align: center;">
+    <span class="title" style="white-space: normal;">Apple Photos</span>
+    <span class="description" style="white-space: normal; max-width: 80%;">{{ message | default: "Could not load the shared album." }}</span>
+  </div>
+{%- endif -%}
+</div>
+{% endtemplate %}

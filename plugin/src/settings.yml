@@ -1,0 +1,46 @@
+---
+name: Apple Photos (Shared Album)
+description: A photo a day from iCloud
+strategy: polling
+# TRMNL polls Apple's CloudKit "resolve" endpoint for the album link, then the
+# Serverless script (transform.js, language: Node) lists the album and picks
+# today's photo. Nothing needs hosting. The Liquid below extracts the token
+# from any supported link shape (photos.icloud.com/shared/album/<token>,
+# icloud.com/sharedalbum/#<token>, or a bare token).
+polling_verb: post
+polling_url: https://ckdatabasews.icloud.com/database/1/com.apple.photos.cloud/production/public/records/resolve?remapEnums=true&sharing_url_key={{ album_url | strip | split: "#" | last | split: "?" | first | split: "/shared/album/" | last | split: "/photos/" | last | split: "/" | first }}
+polling_headers: content-type=text/plain
+polling_body: '{"shortGUIDs":[{"value":"{{ album_url | strip | split: "#" | last | split: "?" | first | split: "/shared/album/" | last | split: "/photos/" | last | split: "/" | first }}"}]}'
+serverless_language: node
+refresh_interval: 60
+no_screen_padding: 'yes'
+dark_mode: 'no'
+custom_fields:
+  - keyname: album_url
+    field_type: url
+    name: Shared album link
+    description: The public link to your iCloud shared album.
+    placeholder: https://photos.icloud.com/shared/album/...
+    help_text: In Photos, open the shared album, click the people icon, turn on <strong>Public Website</strong>, then copy the link. Both the new <code>photos.icloud.com/shared/album/…</code> links and the older <code>icloud.com/sharedalbum/#…</code> links work.
+  - keyname: fit
+    field_type: select
+    name: Photo fit
+    options:
+      - Fill the screen (crops the edges): cover
+      - Show the whole photo (adds bars): contain
+    default: cover
+  - keyname: show_caption
+    field_type: boolean
+    name: Show album name and date
+    default: "false"
+  - keyname: include_videos
+    field_type: boolean
+    name: Include videos (shows a still frame)
+    default: "false"
+    optional: true
+  - keyname: salt
+    field_type: string
+    name: Shuffle seed
+    optional: true
+    placeholder: kitchen
+    help_text: Optional. Give each device its own word here so they show different photos on the same day.

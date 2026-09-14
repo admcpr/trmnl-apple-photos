@@ -1,0 +1,16 @@
+{
+  "name": "trmnl-apple-photos-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared code for the TRMNL Apple Photos plugin: builds the Serverless script and optionally runs as a Cloudflare Worker",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build:serverless": "node scripts/build-serverless.mjs",
+    "test": "npm run build:serverless && node --test \"test/*.test.js\""
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.2"
+  }
+}

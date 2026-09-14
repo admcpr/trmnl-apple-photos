@@ -1,0 +1,27 @@
+---
+# Local preview config for `trmnlp serve` (https://github.com/usetrmnl/trmnlp).
+# Values here stand in for what a user would enter in the plugin's settings form.
+watch:
+  - src
+  - .trmnlp.yml
+
+time_zone: Europe/London
+
+# Runs src/transform.js (the Serverless script) against the polled response,
+# the same way trmnl.com does in production.
+transform_runtime: enabled
+
+custom_fields:
+  album_url: https://photos.icloud.com/shared/album/06bVVxVSI16Dp22BBajWXkfkw/
+  fit: cover
+  show_caption: "true"
+  include_videos: "false"
+  salt: ""
+
+variables:
+  trmnl:
+    user:
+      time_zone_iana: Europe/London
+      utc_offset: 3600
+    plugin_settings:
+      instance_name: Apple Photos
