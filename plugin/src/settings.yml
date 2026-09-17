@@ -8,7 +8,9 @@ strategy: polling
 # from any supported link shape (photos.icloud.com/shared/album/<token>,
 # icloud.com/sharedalbum/#<token>, or a bare token).
 polling_verb: post
-polling_url: https://ckdatabasews.icloud.com/database/1/com.apple.photos.cloud/production/public/records/resolve?remapEnums=true&sharing_url_key={{ album_url | strip | split: "#" | last | split: "?" | first | split: "/shared/album/" | last | split: "/photos/" | last | split: "/" | first }}
+# Quoted because the Liquid contains a space followed by "#", which YAML would
+# otherwise read as the start of a comment and cut the line short.
+polling_url: 'https://ckdatabasews.icloud.com/database/1/com.apple.photos.cloud/production/public/records/resolve?remapEnums=true&sharing_url_key={{ album_url | strip | split: "#" | last | split: "?" | first | split: "/shared/album/" | last | split: "/photos/" | last | split: "/" | first }}'
 polling_headers: content-type=text/plain
 polling_body: '{"shortGUIDs":[{"value":"{{ album_url | strip | split: "#" | last | split: "?" | first | split: "/shared/album/" | last | split: "/photos/" | last | split: "/" | first }}"}]}'
 serverless_language: node

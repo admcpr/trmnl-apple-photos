@@ -11,6 +11,7 @@
     "test": "npm run build:serverless && node --test test/*.test.js"
   },
   "devDependencies": {
+    "js-yaml": "^4.3.2",
     "wrangler": "^4.131.2"
   }
 }

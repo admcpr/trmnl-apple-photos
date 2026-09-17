@@ -50,7 +50,7 @@ In Photos, open the shared album, click the people icon, and turn on **Public We
 
 Either import the plugin:
 
-1. Download [apple-photos-plugin.zip](https://github.com/admcpr/trmnl-apple-photos/releases/latest/download/apple-photos-plugin.zip) from the latest release. CI rebuilds it on every push to `main`. To build it yourself instead, zip the contents of `plugin/src/` so the files sit at the top level of the zip:
+1. Download `apple-photos-plugin.zip` from the [latest release](https://github.com/admcpr/trmnl-apple-photos/releases/latest). CI rebuilds it on every push to `main`. To build it yourself instead, zip the contents of `plugin/src/` so the files sit at the top level of the zip:
 
    ```powershell
    Compress-Archive -Path plugin\src\* -DestinationPath apple-photos-plugin.zip -Force
