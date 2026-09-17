@@ -8,7 +8,7 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "build:serverless": "node scripts/build-serverless.mjs",
-    "test": "npm run build:serverless && node --test \"test/*.test.js\""
+    "test": "npm run build:serverless && node --test test/*.test.js"
   },
   "devDependencies": {
     "wrangler": "^4.131.2"
