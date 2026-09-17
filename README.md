@@ -1,5 +1,7 @@
 # TRMNL Apple Photos (Shared Album)
 
+[![CI](https://github.com/admcpr/trmnl-apple-photos/actions/workflows/ci.yml/badge.svg)](https://github.com/admcpr/trmnl-apple-photos/actions/workflows/ci.yml)
+
 A [TRMNL](https://trmnl.com) plugin that shows one photo per day from a public iCloud shared album. Every day it picks a different photo from the album, and the same photo stays on screen all day.
 
 It works with the share links that current versions of macOS and iOS produce (`https://photos.icloud.com/shared/album/...`), which the existing first-party Apple Photos plugin does not understand, and it still works with the older `https://www.icloud.com/sharedalbum/#...` links.
@@ -48,7 +50,7 @@ In Photos, open the shared album, click the people icon, and turn on **Public We
 
 Either import the plugin:
 
-1. Zip the contents of `plugin/src/` so the files sit at the top level of the zip:
+1. Download [apple-photos-plugin.zip](https://github.com/admcpr/trmnl-apple-photos/releases/latest/download/apple-photos-plugin.zip) from the latest release. CI rebuilds it on every push to `main`. To build it yourself instead, zip the contents of `plugin/src/` so the files sit at the top level of the zip:
 
    ```powershell
    Compress-Archive -Path plugin\src\* -DestinationPath apple-photos-plugin.zip -Force
@@ -132,7 +134,9 @@ npm run build:serverless
 npm run dev            # worker at http://localhost:8787
 ```
 
-`transform.js` is generated from `worker/src/`. Edit the sources, not the bundle. To preview the screens, install trmnlp (Ruby, or Docker) and run `trmnlp serve` inside `plugin/`. `plugin/.trmnlp.yml` holds sample settings and enables the transform runtime, so previews use the real script.
+`transform.js` is generated from `worker/src/`. Edit the sources, not the bundle, and commit the rebuilt bundle: CI fails if the committed `transform.js` differs from what the sources produce.
+
+The [CI workflow](.github/workflows/ci.yml) runs the build and tests on every push and pull request, uploads the plugin zip as a workflow artifact, and on `main` moves the `latest` tag and updates the "Latest build" GitHub release with the zip. To preview the screens, install trmnlp (Ruby, or Docker) and run `trmnlp serve` inside `plugin/`. `plugin/.trmnlp.yml` holds sample settings and enables the transform runtime, so previews use the real script.
 
 ## Apple API notes
 
